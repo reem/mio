@@ -6,11 +6,11 @@ authors = ["Carl Lerche <me@carllerche.com>"]
 
 [dependencies.nix]
 
-git = "https://github.com/carllerche/nix-rust"
+git = "https://github.com/reem/nix-rust"
 
 [dependencies.time]
 
-git = "https://github.com/rust-lang/time"
+git = "https://github.com/reem/time"
 
 [[test]]
 
