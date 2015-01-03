@@ -10,7 +10,8 @@ log = "*"
 
 [dependencies.nix]
 
-git = "https://github.com/carllerche/nix-rust"
+git = "https://github.com/reem/nix-rust"
+branch = "update-rust"
 
 [[test]]
 
