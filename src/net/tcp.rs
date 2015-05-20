@@ -123,10 +123,36 @@ impl TryRead for TcpStream {
     }
 }
 
+impl io::Read for TcpStream {
+    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+        match self.sys.read_slice(buf) {
+            Ok(Some(n)) => Ok(n),
+            Ok(None) =>
+                Err(io::Error::new(io::ErrorKind::WouldBlock,
+                                   "TcpStream read would block.")),
+            Err(e) => Err(e)
+        }
+    }
+}
+
 impl TryWrite for TcpStream {
     fn write_slice(&mut self, buf: &[u8]) -> io::Result<Option<usize>> {
         self.sys.write_slice(buf)
     }
+}
+
+impl io::Write for TcpStream {
+    fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+        match self.sys.write_slice(buf) {
+            Ok(Some(n)) => Ok(n),
+            Ok(None) =>
+                Err(io::Error::new(io::ErrorKind::WouldBlock,
+                                   "TcpStream write would block.")),
+            Err(e) => Err(e)
+        }
+    }
+
+    fn flush(&mut self) -> io::Result<()> { Ok(()) }
 }
 
 impl Evented for TcpStream {
